@@ -4,6 +4,7 @@ import Appbar from './Appbar';
 import Dashboard from './Components/Dashboard';
 import Reports from './Components/Reports';
 import Analytics from './Components/Analytics';
+import './App.css';
 
 function App() {
   return (
