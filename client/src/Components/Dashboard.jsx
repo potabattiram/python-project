@@ -8,50 +8,20 @@ export default function Dashboard() {
       .get("http://localhost:5000/")
       .then((res) => {
         console.log(res.data);
+        setValues(res.data)
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
-  const UserData = [
-    {
-      id: 1,
-      year: 2016,
-      userGain: 80000,
-      userLost: 823,
-    },
-    {
-      id: 2,
-      year: 2017,
-      userGain: 45677,
-      userLost: 345,
-    },
-    {
-      id: 3,
-      year: 2018,
-      userGain: 78888,
-      userLost: 555,
-    },
-    {
-      id: 4,
-      year: 2019,
-      userGain: 90000,
-      userLost: 4555,
-    },
-    {
-      id: 5,
-      year: 2020,
-      userGain: 4300,
-      userLost: 234,
-    },
-  ];
+  
+  const [values,setValues] = useState([]);
   const [userData, setUserData] = useState({
-    labels: UserData.map((data) => data.year),
+    labels: values.map((data) => data['likelihood']),
     datasets: [
       {
         label: "Users Gained",
-        data: UserData.map((data) => data.userGain),
+        data: values.map((data) => data['likelihood']),
         backgroundColor: [
           "rgba(75,192,192,1)",
           "#ecf0f1",
