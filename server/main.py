@@ -2,8 +2,11 @@ from bson import json_util, ObjectId
 import json
 from flask import Flask, request
 from pymongo import MongoClient
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app,resources={r"/*": {"origins": "*"}})
+
 client = MongoClient(
     "mongodb://ameychilka:AmeyChilka@ac-7swxiyz-shard-00-00.rmcm2dj.mongodb.net:27017,"
     "ac-7swxiyz-shard-00-01.rmcm2dj.mongodb.net:27017,"
@@ -27,7 +30,7 @@ def getData():
 @app.route('/')
 def root():
     document = []
-    for doc in db['test'].find():
+    for doc in db['test'].find().limit(20):
         document.append(doc)
     return json.dumps(document, default=json_util.default)
 
