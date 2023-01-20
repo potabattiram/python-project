@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import BarChart from "./Charts/BarChart";
+// import BarChart from "./Charts/BarChart";
 import axios from "axios";
+import { BarChart, Bar, XAxis, YAxis, PieChart, Pie, Cell } from 'recharts';
 
 export default function Dashboard() {
   useEffect(() => {
@@ -8,36 +9,29 @@ export default function Dashboard() {
       .get("http://localhost:5000/")
       .then((res) => {
         console.log(res.data);
-        setValues(res.data)
+        setData(res.data)
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
   
-  const [values,setValues] = useState([]);
-  const [userData, setUserData] = useState({
-    labels: values.map((data) => data['likelihood']),
-    datasets: [
-      {
-        label: "Users Gained",
-        data: values.map((data) => data['likelihood']),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-        ],
-        borderColor: "white",
-        borderWidth: 2,
-      },
-    ],
-  });
+  const [data,setData] = useState([]);
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+  function MyBarChart({ data }) {
+    return (
+      <BarChart width={600} height={300} data={data}>
+        <XAxis dataKey="source" />
+        <YAxis />
+        <Bar dataKey="intensity" fill="#8884d8" />
+      </BarChart>
+    );
+  }
+ 
   return (
     <div>
-      Dashboard
-      <BarChart chartData={userData} />
+      <MyBarChart data={data} />
     </div>
   );
 }
